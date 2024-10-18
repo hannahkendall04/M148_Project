@@ -21,5 +21,6 @@ git clone https://github.com/atan9611/M148_Project.git
     .\venv\Scripts\activate
     pip install -r requirements.txt
     ```
-5. Now you are free to make and run .ipynb files in the project directory.
+5. Now you are free to make and run .ipynb files in the project directory!
+    * Note: when running cells in a .ipynb file, select the virtual environment you created earlier when prompted by VSCode to select a kernel.
 
