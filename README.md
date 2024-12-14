@@ -95,3 +95,4 @@ git clone https://github.com/atan9611/M148_Project.git
 6. To run the entire project, select the `final_code.ipynb` file and run all cells. 
     * You can also go to each individual section and run the cells one by one to see the output of each step.
     * The code is designed to be modular, so you can run each section independently of the others. It is also designed to be able to easily change the genres you are classifying, the features you are using, and the models you are using. Feel free to experiment with different combinations!
+    * **Note**: Pay special attention to the comments in the clustering section of the code! Since the clustering algorithm arbitrarily assigns cluster numbers, the cluster numbers may not match up with the genre numbers. Make sure to check the cluster numbers and the genre numbers to see which cluster corresponds to which genre and map them accordingly. Sample mappings are provided in the code to help you with this process.
