@@ -27,10 +27,10 @@ The data set includes 114000 songs with 133 genres. Each track is defined by 19 
 | track_genre | The genre of the track |
 
 ## Main Goal
-The main problem we addressed was the classification of songs into different genres based on their audio features. We used a variety of classification algorithms, such as Logistic Regression, Random Forest, and clustering algorithms, to classify songs into genres. We also used a neural network to classify songs into genres. We then evaluated the performance of the models using various error metrics.
+The main problem we addressed was the classification of songs into the two genres: Chicago House and Cantopop based on their audio features. We used a variety of classification algorithms, such as Logistic Regression, Classification algorithms (Decision Trees/Random Forest), and Neural Network to classify songs into genres. We then evaluated the performance of the models using various error metrics.
 
 ## Model Overviews and Results
-Since our model's response variable is categorical (genre), it would not make sense to apply linear regression as a predictive model. The first model we tried was Logistic Regression. However, since logistic regression measures the probability of each song belonging to a positive or negative class, the logistic regression could only determine if a song belongs to genre 1 or 2. For our investigation, we picked the two genres, chicago house and canto-pop, due to the fact that there were an equal number of samples of the genres in the original dataset and because they have distinct audio features. We used forward selection  (SequentialFeatureSelector) on our logistic regression training set to greedily select for features that maximized accuracy when we did cross-validation. From this we found that our best features were danceability,  acousticness, instrumentalness, and time signature. We had a high accuracy of 0.875, true positive rate of 0.9, and true negative rate of 0.85, suggesting that our logistic regression performed well. Our AUC was high at 0.946. We also used cross validation to evaluate model performance and got high accuracies. It is possible that our model is overfitting which is resulting in such high accuracy and AUC. However, it is also possible that our model is performing well because we specifically chose genres (canto-pop and chicago-house) that are very different from each other. Because of our high initial accuracy, we did not use regularization in our logistic regression model, or for the other machine learning models we utilized. Future work could involve using regularization to prevent overfitting and to improve the generalizability of our model.
+The first model we tried was Logistic Regression, which performed the best compared to the other two (classification and neural networks). Logistic regression was used to classify the binary response variables: Chicago House and Cantopop. We first applied the forward selection algorithm (SequentialFeatureSelector) on our logistic regression training set to select features that maximized cross-validation accuracy iteratively. The top 4 features that maximized the accuracy were danceability, acousticness, instrumentalness, and time signature, which also happened to be among the top 10 features with the highest PC1 variable loading. After applying this model to our validation data, we obtained a high accuracy of 0.875, a true positive rate of 0.9, and a true negative rate of 0.85, indicating that the model is balanced and performs well in identifying the targeting genre. The AUC with the validation data was also high, with a value of 0.946, indicating that the model has a strong discriminative ability to distinguish between the two genres. The high evaluation metrics suggest that logistic regression is a suitable choice for this binary classification task and that regularization is not necessary for this case. However, a general limitation of the logistic regression model is that it performs well for binary problems but cannot directly handle multi-class classification tasks.
 
 We also classified the data using Decision Trees and the Random Forest algorithm, the results of which are summarized below:
 
@@ -46,14 +46,14 @@ Random Forest Model Error: 0.020000000000000018
 Random Forest Model F1 Score: 0.9798994974874371
 Random Model TPR: 0.975
 Random Model TNR: 0.985
-Random Forest Model AUC: 0.9958875
-Random Forest Model CV AUC: 0.9984374999999999, 0.9896875, 0.9975, 1.0, 0.996875
-Random Forest Model CV Accuracy: 0.975, 0.9625, 0.9625, 1.0, 0.95
+Random Forest Model AUC (validation data): 0.9958875
+Random Forest Model CV AUC (validation data): 0.9984374999999999, 0.9896875, 0.9975, 1.0, 0.996875
+Random Forest Model CV Accuracy (validation data): 0.975, 0.9625, 0.9625, 1.0, 0.95
 ```
 
-The AUC is particularly interesting because it is a measure of how well the model can distinguish between the two classes. The AUC (which is 0.9958875) is close to 1.0. This indicates a nearly perfect model performance. This could be an indication of overfitting, but it could also be an indication that the model is performing well, which is not surprising given the distinct audio features of the two genres we chose to classify.
+The AUC is particularly interesting because it is a measure of how well the model can distinguish between the two classes. The AUC (which is 0.9958875) is close to 1.0. This indicates a nearly perfect model performancel, which is not surprising given the distinct audio features of the two genres we chose to classify.
 
-Despite our success with these machine learning methods, our primary methodology for classifying songs into genres was through PCA and clustering algorithms. We chose these as our primary methodology because we wanted to create a model that is easy to visualize, gives us lots of information about the data set, and is easy to scale to an arbitrary number of genres. We used PCA on our scaled data to determine the most significant features in our data set. We then used KMeans and Hierarchical clustering on several different sets of genres to analyze the effectiveness of clustering for classifying genres. Both Kmeans and Hierarchical clustering performed well with classifying chicago house and canto-pop genres, with results shown below:
+PCA and clustering algorithms were used as exploratory tools. We used PCA on our scaled data to determine the most significant features in our data set. We then used KMeans and Hierarchical clustering on several different sets of genres to analyze the effectiveness of clustering for classifying genres. Both Kmeans and Hierarchical clustering performed well with classifying chicago house and canto-pop genres, with results shown below:
 
 ```
 KMeans Accuracy: 0.9208416833667334
@@ -64,8 +64,6 @@ Hierarchical Accuracy: 0.16182364729458917
 Hierarchical Error Rate: 0.8381763527054108
 Hierarchical Silhouette Score: 0.34069147956129936
 ```
-
-The results for both clustering algorithms performed significantly worse than the machine learning models. This is likely because the clustering algorithms are unsupervised and do not have the same level of information about the data as the supervised machine learning models. However, the clustering algorithms are still useful for visualizing the data and for understanding the relationships between the genres in the dataset. Additionally, the clustering algorithms are easily scalable to an arbitrary number of genres, which is useful for future work.
 
 ## How to Use
 If you would like to run through our entire project, check out our `final_code.ipynb` file. If you would like to look at some more modularized versions of our process, check out the files in the `Data` directory.
